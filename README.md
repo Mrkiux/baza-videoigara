@@ -48,7 +48,7 @@ Aplikacija je objavljena putem Streamlit Community Clouda.
 
 Poveznica na aplikaciju:
 
-`https://baza-videoigara-7rypkwd3l9dmvbjekhmgiv.streamlit.app`
+https://baza-videoigara-7rypkwd3l9dmvbjekhmgiv.streamlit.app
 
 ## 📁 Struktura projekta
 
