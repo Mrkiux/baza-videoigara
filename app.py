@@ -2,9 +2,6 @@ import streamlit as st
 import pandas as pd
 from streamlit_gsheets import GSheetsConnection
 
-# --------------------------------------------------
-# POSTAVKE STRANICE
-# --------------------------------------------------
 
 st.set_page_config(
     page_title="Baza videoigara",
@@ -15,9 +12,6 @@ st.set_page_config(
 st.title("🎮 Baza videoigara")
 st.write("Seminarski rad - Streamlit aplikacija")
 
-# --------------------------------------------------
-# POVEZIVANJE S GOOGLE SHEETS
-# --------------------------------------------------
 
 conn = st.connection(
     "gsheets",
@@ -27,10 +21,6 @@ conn = st.connection(
 spreadsheet_url = st.secrets["connections"]["gsheets"]["spreadsheet"]
 
 
-# --------------------------------------------------
-# FUNKCIJA ZA UČITAVANJE PODATAKA
-# --------------------------------------------------
-
 def ucitaj_podatke():
     df = conn.read(
         spreadsheet=spreadsheet_url,
@@ -38,7 +28,6 @@ def ucitaj_podatke():
         ttl=0
     )
 
-    # Osiguravamo ispravne tipove podataka
     if not df.empty:
         df["ID"] = pd.to_numeric(df["ID"], errors="coerce")
         df["Godina"] = pd.to_numeric(df["Godina"], errors="coerce")
@@ -46,11 +35,6 @@ def ucitaj_podatke():
         df["Cijena"] = pd.to_numeric(df["Cijena"], errors="coerce")
 
     return df
-
-
-# --------------------------------------------------
-# FUNKCIJA ZA SPREMANJE PODATAKA
-# --------------------------------------------------
 
 def spremi_podatke(df):
     conn.update(
@@ -60,13 +44,9 @@ def spremi_podatke(df):
     )
 
 
-# Učitaj bazu
 df = ucitaj_podatke()
 
 
-# --------------------------------------------------
-# 1. PRIKAZ BAZE
-# --------------------------------------------------
 
 st.header("📊 Baza podataka")
 
@@ -79,9 +59,6 @@ st.dataframe(
 st.divider()
 
 
-# --------------------------------------------------
-# 2. DODAVANJE NOVE IGRE
-# --------------------------------------------------
 
 st.header("➕ Dodaj novu igru")
 
@@ -190,9 +167,6 @@ with st.form("dodavanje_igre"):
 st.divider()
 
 
-# --------------------------------------------------
-# 3. PRETRAŽIVANJE I FILTRIRANJE
-# --------------------------------------------------
 
 st.header("🔎 Pretraživanje i filtriranje")
 
@@ -228,7 +202,6 @@ with col3:
     )
 
 
-# Primijeni filtre
 filtrirani_df = df.copy()
 
 if pretraga:
@@ -267,9 +240,6 @@ st.dataframe(
 st.divider()
 
 
-# --------------------------------------------------
-# 4. SORTIRANJE
-# --------------------------------------------------
 
 st.header("↕️ Sortiranje podataka")
 
@@ -314,9 +284,6 @@ st.dataframe(
 st.divider()
 
 
-# --------------------------------------------------
-# 5. NAJBOLJA I NAJLOŠIJA IGRA
-# --------------------------------------------------
 
 st.header("🏆 Najbolje i najlošije vrijednosti")
 
@@ -365,9 +332,6 @@ if not df.empty:
 st.divider()
 
 
-# --------------------------------------------------
-# 6. BRISANJE IGRE
-# --------------------------------------------------
 
 st.header("🗑️ Brisanje igre")
 
@@ -405,9 +369,6 @@ if not df.empty:
         st.rerun()
 
 
-# --------------------------------------------------
-# KRAJ
-# --------------------------------------------------
 
 st.divider()
 
